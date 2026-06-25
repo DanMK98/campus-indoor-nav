@@ -1,0 +1,38 @@
+{
+  "entrance": {
+    "lobby": 3,
+    "reception": 5
+  },
+  "lobby": {
+    "entrance": 3,
+    "reception": 2,
+    "hallway": 4
+  },
+  "reception": {
+    "entrance": 5,
+    "lobby": 2,
+    "officeA": 6
+  },
+  "hallway": {
+    "lobby": 4,
+    "officeA": 3,
+    "officeB": 5,
+    "stairs": 4
+  },
+  "officeA": {
+    "reception": 6,
+    "hallway": 3
+  },
+  "officeB": {
+    "hallway": 5,
+    "stairs": 2
+  },
+  "stairs": {
+    "hallway": 4,
+    "officeB": 2,
+    "classroom": 5
+  },
+  "classroom": {
+    "stairs": 5
+  }
+}
