@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import graph from './data/sampleBuilding-home.json'
+import buildingTest from './data/sampleBuilding-home.json'
 import dijkstra from './utils/djikstra.js'
 import './App.css'
 
-const nodes = Object.keys(graph)
+const nodes = Object.keys(buildingTest.nodes)
 
-function formatNodeName(node) {
-  return node
+function formatNodeName(nodeId) {
+  return buildingTest.nodes[nodeId]?.label ?? nodeId
     .replace(/([a-z])([A-Z])/g, '$1 $2')
     .replace(/^./, (letter) => letter.toUpperCase())
 }
@@ -15,7 +15,7 @@ function App() {
   const [start, setStart] = useState('entrance')
   const [destination, setDestination] = useState('classroom')
   const [route, setRoute] = useState(() => ({
-    ...dijkstra(graph, 'entrance', 'classroom'),
+    ...dijkstra(buildingTest.edges, 'entrance', 'classroom'),
     start: 'entrance',
     destination: 'classroom',
   }))
@@ -23,7 +23,7 @@ function App() {
   function findRoute(event) {
     event.preventDefault()
     setRoute({
-      ...dijkstra(graph, start, destination),
+      ...dijkstra(buildingTest.edges, start, destination),
       start,
       destination,
     })
@@ -105,7 +105,7 @@ function App() {
           </div>
           <div className="distance">
             <strong>{route.distance}</strong>
-            <span>distance units</span>
+            <span>distance units "to be meters"</span>
           </div>
         </div>
 
