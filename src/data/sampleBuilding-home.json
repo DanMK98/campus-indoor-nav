@@ -10,8 +10,45 @@
       "label": "Main Lobby",
       "type": "room",
       "floor": 1,
-      "tags": ["reception", "waiting area"]
+      "tags": ["waiting area"]
+    },
+    "reception": {
+      "label": "Reception",
+      "type": "POI",
+      "floor": 1,
+      "tags": []
+    },
+    "hallway": {
+      "label": "Hallway",
+      "type": "connector",
+      "floor": 1,
+      "tags": ["connects offices, POIs and stairs/elevators"]
+    },
+    "officeA": {
+      "label": "Office A (Mr. Doe)",
+      "type": "room",
+      "floor": "1",
+      "tags": ["Finance Director"]
+    },
+    "officeB": {
+      "label": "Office B (Ms. Doe)",
+      "type": "room",
+      "floor": "1",
+      "tags": ["Marketing Director"]
+    },
+    "stairs1": {
+      "label": "Stairs Floor 1",
+      "type": "connector",
+      "floor": 1,
+      "tags": []
+    },
+    "classroom": {
+      "label": "Classroom",
+      "type": "room",
+      "floor": 1,
+      "tags": ["teaching"]
     }
+
   },
   "edges": {
     "entrance": {
@@ -32,23 +69,21 @@
       "lobby": 4,
       "officeA": 3,
       "officeB": 5,
-      "stairs": 4
+      "stairs1": 4
     },
     "officeA": {
       "reception": 6,
       "hallway": 3
     },
     "officeB": {
-      "hallway": 5,
-      "stairs": 2
+      "hallway": 5
     },
-    "stairs": {
+    "stairs1": {
       "hallway": 4,
-      "officeB": 2,
       "classroom": 5
     },
     "classroom": {
-      "stairs": 5
+      "stairs1": 5
     }
   }
 }

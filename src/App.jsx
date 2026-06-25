@@ -1,32 +1,77 @@
 import { useState } from 'react'
-import buildingTest from './data/sampleBuilding-home.json'
+import sampleBuilding from './data/sampleBuilding-home.json'
+import libraryBuilding from './data/librarySocial-UC3M-GetafeBuilding.json'
 import dijkstra from './utils/djikstra.js'
 import './App.css'
 
-const nodes = Object.keys(buildingTest.nodes)
+const buildings = {
+  sample: {
+    name: 'Sample Building',
+    data: sampleBuilding,
+    defaultStart: 'entrance',
+    defaultDestination: 'classroom',
+  },
+  library: {
+    name: 'UC3M Social Sciences Library',
+    data: libraryBuilding,
+    defaultStart: 'main-entrance',
+    defaultDestination: 'study-tables',
+  },
+}
 
-function formatNodeName(nodeId) {
-  return buildingTest.nodes[nodeId]?.label ?? nodeId
-    .replace(/([a-z])([A-Z])/g, '$1 $2')
-    .replace(/^./, (letter) => letter.toUpperCase())
+function calculateRoute(building, start, destination) {
+  return {
+    ...dijkstra(building.data.edges, start, destination),
+    start,
+    destination,
+  }
 }
 
 function App() {
-  const [start, setStart] = useState('entrance')
-  const [destination, setDestination] = useState('classroom')
-  const [route, setRoute] = useState(() => ({
-    ...dijkstra(buildingTest.edges, 'entrance', 'classroom'),
-    start: 'entrance',
-    destination: 'classroom',
-  }))
+  const [buildingId, setBuildingId] = useState('library')
+  const [start, setStart] = useState(buildings.library.defaultStart)
+  const [destination, setDestination] = useState(
+    buildings.library.defaultDestination,
+  )
+  const [route, setRoute] = useState(() =>
+    calculateRoute(
+      buildings.library,
+      buildings.library.defaultStart,
+      buildings.library.defaultDestination,
+    ),
+  )
+
+  const currentBuilding = buildings[buildingId]
+  const nodes = Object.keys(currentBuilding.data.nodes)
+
+  function formatNodeName(nodeId) {
+    return (
+      currentBuilding.data.nodes[nodeId]?.label ??
+      nodeId
+        .replace(/([a-z])([A-Z])/g, '$1 $2')
+        .replace(/^./, (letter) => letter.toUpperCase())
+    )
+  }
+
+  function getNodeTags(nodeId) {
+    return currentBuilding.data.nodes[nodeId]?.tags ?? []
+  }
+
+  function changeBuilding(event) {
+    const nextBuildingId = event.target.value
+    const nextBuilding = buildings[nextBuildingId]
+    const nextStart = nextBuilding.defaultStart
+    const nextDestination = nextBuilding.defaultDestination
+
+    setBuildingId(nextBuildingId)
+    setStart(nextStart)
+    setDestination(nextDestination)
+    setRoute(calculateRoute(nextBuilding, nextStart, nextDestination))
+  }
 
   function findRoute(event) {
     event.preventDefault()
-    setRoute({
-      ...dijkstra(buildingTest.edges, start, destination),
-      start,
-      destination,
-    })
+    setRoute(calculateRoute(currentBuilding, start, destination))
   }
 
   return (
@@ -44,12 +89,23 @@ function App() {
       <section className="hero-panel">
         <div className="hero-copy">
           <p className="eyebrow">Shortest path finder</p>
-          <h2>Where would you like to go?</h2>
+          <h2>Where are you right now?</h2>
           <p className="intro">
-            Select two locations to find the shortest indoor route through the
-            sample building.
+            Choose your building, then select two locations to find the shortest
+            indoor route.
           </p>
         </div>
+
+        <label className="building-picker">
+          Building
+          <select value={buildingId} onChange={changeBuilding}>
+            {Object.entries(buildings).map(([id, building]) => (
+              <option key={id} value={id}>
+                {building.name}
+              </option>
+            ))}
+          </select>
+        </label>
 
         <form className="route-form" onSubmit={findRoute}>
           <label>
@@ -61,6 +117,13 @@ function App() {
                 </option>
               ))}
             </select>
+            <div className="tags">
+              {getNodeTags(start).map((tag) => (
+                <span key={tag} className="tag">
+                  {tag}
+                </span>
+              ))}
+            </div>
           </label>
 
           <button
@@ -87,6 +150,13 @@ function App() {
                 </option>
               ))}
             </select>
+            <div className="tags">
+              {getNodeTags(destination).map((tag) => (
+                <span key={tag} className="tag">
+                  {tag}
+                </span>
+              ))}
+            </div>
           </label>
 
           <button className="find-button" type="submit">
@@ -98,23 +168,31 @@ function App() {
       <section className="result-card" aria-live="polite">
         <div className="result-heading">
           <div>
-            <p className="eyebrow">Recommended route</p>
+            <p className="eyebrow">{currentBuilding.name}</p>
             <h2>
               {formatNodeName(route.start)} to {formatNodeName(route.destination)}
             </h2>
           </div>
           <div className="distance">
             <strong>{route.distance}</strong>
-            <span>distance units "to be meters"</span>
+            <span>distance units</span>
           </div>
         </div>
 
         {route.path.length > 0 ? (
           <ol className="route-path">
             {route.path.map((node, index) => (
-              <li key={node}>
+              <li
+                key={node}
+                className={
+                  index === route.path.length - 1 ? 'destination-node' : undefined
+                }
+              >
                 <span className="node-number">{index + 1}</span>
                 <span>{formatNodeName(node)}</span>
+                {index === route.path.length - 1 && (
+                  <span className="destination-label">Destination</span>
+                )}
               </li>
             ))}
           </ol>

@@ -1,0 +1,87 @@
+{
+    "nodes": {
+        "elevatorF0": {
+            "label" : "Elevator F0",
+            "type": "connector",
+            "floor": 0,
+            "tags": ["accessible"]
+        },
+        "elevatorF2": {
+            "label" : "Elevator F2",
+            "type": "connector",
+            "floor": 2,
+            "tags": ["accessible"]
+        },
+        "stairsF0": {
+            "label": "Stairs F0",
+            "type": "connector",
+            "floor": 0,
+            "tags": []
+        },
+        "stairsF2": {
+            "label": "Stairs F2",
+            "type": "connector",
+            "floor": 2,
+            "tags": []
+        },
+        "study-tables": {
+            "label": "Study Tables",
+            "type": "POI",
+            "floor": "2",
+            "tags": ["study", "silence"]
+        },
+        "lobby": {
+            "label": "Lobby",
+            "type": "room",
+            "floor": 0,
+            "tags": ["staff", "reception"]
+        },
+        "main-entrance": {
+            "label": "Main Entrance",
+            "type": "POI",
+            "floor": 0,
+            "tags": ["accessible", "ramp", "automatic doors"]
+        }
+    },
+
+    "edges": {
+        "main-entrance": {
+            "lobby": 1
+        },
+        "lobby": {
+            "main-entrance": 1,
+            "stairsF0": 4,
+            "elevatorF0": 4
+        },
+        "stairsF0": {
+            "elevatorF0": 1,
+            "elevatorF2": 8,
+            "stairsF2": 8,
+            "lobby": 4
+        },
+        "stairsF2": {
+            "elevatorF0": 8,
+            "elevatorF2": 1,
+            "stairsF0": 8,
+            "study-tables": 2
+        },
+        "elevatorF0": {
+            "stairsF0": 1,
+            "stairsF2": 8,
+            "elevatorF2": 1,
+            "lobby": 4
+        },
+        "elevatorF2": {
+            "elevatorF0": 1,
+            "stairsF0": 8,
+            "stairsF2": 1,
+            "study-tables": 2
+        },
+        "study-tables": {
+            "elevatorF2": 2,
+            "stairsF2": 2
+        }
+
+    }
+
+}
