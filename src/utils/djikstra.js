@@ -84,6 +84,20 @@ function buildPath(previous, start, destination, distance) {
   return []
 }
 
+export function buildGraph(edges) {
+  const graph = {}
+
+  for (const [from, to, weight] of edges) {
+    graph[from] ??= {}
+    graph[to] ??= {}
+
+    graph[from][to] = weight
+    graph[to][from] = weight
+  }
+
+  return graph
+}
+
 function validateGraph(graph, start, destination) {
   if (!graph || typeof graph !== 'object' || Array.isArray(graph)) {
     throw new TypeError('graph must be an adjacency-list object')

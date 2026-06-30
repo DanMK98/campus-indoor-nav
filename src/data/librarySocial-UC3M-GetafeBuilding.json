@@ -27,7 +27,7 @@
         "study-tables": {
             "label": "Study Tables",
             "type": "POI",
-            "floor": "2",
+            "floor": 2,
             "tags": ["study", "silence"]
         },
         "lobby": {
@@ -44,44 +44,15 @@
         }
     },
 
-    "edges": {
-        "main-entrance": {
-            "lobby": 1
-        },
-        "lobby": {
-            "main-entrance": 1,
-            "stairsF0": 4,
-            "elevatorF0": 4
-        },
-        "stairsF0": {
-            "elevatorF0": 1,
-            "elevatorF2": 8,
-            "stairsF2": 8,
-            "lobby": 4
-        },
-        "stairsF2": {
-            "elevatorF0": 8,
-            "elevatorF2": 1,
-            "stairsF0": 8,
-            "study-tables": 2
-        },
-        "elevatorF0": {
-            "stairsF0": 1,
-            "stairsF2": 8,
-            "elevatorF2": 1,
-            "lobby": 4
-        },
-        "elevatorF2": {
-            "elevatorF0": 1,
-            "stairsF0": 8,
-            "stairsF2": 1,
-            "study-tables": 2
-        },
-        "study-tables": {
-            "elevatorF2": 2,
-            "stairsF2": 2
-        }
-
-    }
+    "edges": [
+        ["main-entrance", "lobby", 1],
+        ["lobby", "stairsF0", 4],
+        ["lobby", "elevatorF0", 4],
+        ["stairsF0", "elevatorF0", 1],
+        ["stairsF0", "stairsF2", 8],
+        ["elevatorF0", "elevatorF2", 1],
+        ["stairsF2", "study-tables", 2],
+        ["elevatorF2", "study-tables", 2]
+    ]
 
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import sampleBuilding from './data/sampleBuilding-home.json'
 import libraryBuilding from './data/librarySocial-UC3M-GetafeBuilding.json'
-import dijkstra from './utils/djikstra.js'
+import dijkstra, { buildGraph } from './utils/djikstra.js'
 import './App.css'
 
 const buildings = {
@@ -20,8 +20,12 @@ const buildings = {
 }
 
 function calculateRoute(building, start, destination) {
+  const graph = Array.isArray(building.data.edges)
+    ? buildGraph(building.data.edges)
+    : building.data.edges
+
   return {
-    ...dijkstra(building.data.edges, start, destination),
+    ...dijkstra(graph, start, destination),
     start,
     destination,
   }
