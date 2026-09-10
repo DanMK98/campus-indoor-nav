@@ -1,8 +1,32 @@
 import { useState } from 'react'
 import sampleBuilding from './data/sampleBuilding-home.json'
 import libraryBuilding from './data/librarySocial-UC3M-GetafeBuilding.json'
+import torresQuevedoFloor0 from './data/buildings/4-torres-quevedo-leganes/floor-0.json'
 import dijkstra, { buildGraph } from './utils/djikstra.js'
 import './App.css'
+
+function mergeFloors(floors, extraEdges = []) {
+  const building = floors.reduce(
+    (building, floorData) => ({
+      nodes: {
+        ...building.nodes,
+        ...Object.fromEntries(
+          Object.entries(floorData.nodes).map(([id, node]) => [
+            id,
+            { floor: floorData.floor, ...node },
+          ]),
+        ),
+      },
+      edges: [...building.edges, ...floorData.edges],
+    }),
+    { nodes: {}, edges: [] },
+  )
+
+  return {
+    ...building,
+    edges: [...building.edges, ...extraEdges],
+  }
+}
 
 const buildings = {
   sample: {
@@ -16,6 +40,12 @@ const buildings = {
     data: libraryBuilding,
     defaultStart: 'main-entrance',
     defaultDestination: 'study-tables',
+  },
+  torresQuevedo: {
+    name: 'UC3M Torres Quevedo',
+    data: mergeFloors([torresQuevedoFloor0]),
+    defaultStart: 'male-bathroom-d-f0',
+    defaultDestination: 'room-4-0-e02',
   },
 }
 

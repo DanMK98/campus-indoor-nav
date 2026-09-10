@@ -1,0 +1,107 @@
+{
+  "floor": 0,
+  "nodes": {
+    "entrance": {
+      "label": "Main entrance",
+      "type": "POI",
+      "tags": []
+    },
+    "hallway-f0-d-west": {
+      "label": "Hallway D West",
+      "type": "connector",
+      "tags": ["hallway", "side-d"]
+    },
+    "hallway-f0-d-east": {
+      "label": "Hallway D East",
+      "type": "connector",
+      "tags": ["hallway", "side-d"]
+    },
+    "hallway-f0-e-core": {
+      "label": "Hallway E Core",
+      "type": "connector",
+      "tags": ["hallway", "side-e"]
+    },
+    "hallway-f0-e-east": {
+      "label": "Hallway E East",
+      "type": "connector",
+      "tags": ["hallway", "side-e"]
+    },
+
+    "room-4-0-e05": {
+      "label": "4.0.E05",
+      "type": "room",
+      "tags": ["classroom"]
+    },
+    "room-4-0-e03": {
+      "label": "4.0.E03",
+      "type": "room",
+      "tags": ["classroom"]
+    },
+    "room-4-0-e08": {
+      "label": "4.0.E08",
+      "type": "room",
+      "tags": ["classroom"]
+    },
+    "room-4-0-e02": {
+      "label": "4.0.E02",
+      "type": "room",
+      "tags": ["classroom"]
+    },
+
+    "male-bathroom-d-f0": {
+      "label": "Male Bathroom D",
+      "type": "bathroom",
+      "tags": ["bathroom", "male", "side-d"]
+    },
+    "female-bathroom-d-f0": {
+      "label": "Female Bathroom D",
+      "type": "bathroom",
+      "tags": ["bathroom", "female", "side-d"]
+    },
+    "male-bathroom-e-f0": {
+      "label": "Male Bathroom E",
+      "type": "bathroom",
+      "tags": ["bathroom", "male", "side-e"]
+    },
+    "female-bathroom-e-f0": {
+      "label": "Female Bathroom E",
+      "type": "bathroom",
+      "tags": ["bathroom", "female", "side-e"]
+    },
+
+    "elevator-main-f0": {
+      "label": "Main Elevator Floor 0",
+      "type": "elevator",
+      "connectorId": "elevator-main",
+      "tags": ["accessible"]
+    },
+    "stairs-main-f0": {
+      "label": "Main Stairs Floor 0",
+      "type": "stairs",
+      "connectorId": "stairs-main",
+      "tags": []
+    }
+  },
+  "edges": [
+    ["entrance", "hallway-f0-e-west", 3],
+    ["entrance", "hallway-f0-d-west", 3],
+
+    ["hallway-f0-d-west", "hallway-f0-d-east", 4],
+    ["hallway-f0-d-east", "hallway-f0-e-core", 9],
+    ["hallway-f0-e-core", "hallway-f0-e-east", 8],
+
+    ["male-bathroom-d-f0", "hallway-f0-d-west", 1],
+    ["female-bathroom-d-f0", "hallway-f0-d-west", 1],
+
+    ["room-4-0-e05", "hallway-f0-d-west", 3],
+    ["room-4-0-e03", "hallway-f0-d-east", 2],
+
+    ["elevator-main-f0", "hallway-f0-e-core", 1],
+    ["stairs-main-f0", "hallway-f0-e-core", 1],
+
+    ["male-bathroom-e-f0", "hallway-f0-e-core", 1],
+    ["female-bathroom-e-f0", "hallway-f0-e-core", 1],
+    ["room-4-0-e08", "hallway-f0-e-core", 1],
+    ["room-4-0-e02", "hallway-f0-e-east", 2]
+  ]
+}

@@ -1,0 +1,30 @@
+{
+    "id": "4-torres-quevedo",
+    "name": "UC3M Leganés Torres Quevedo Building (4)",
+    "floors": [
+        "basement.json",
+        "floor-0.json",
+        "floor-1.json",
+        "floor-2.json",
+        "floor-3.json",
+        "floor-4.json"
+    ],
+    "verticalEdges": [
+        ["stairs-E-b1", "stairs-E-f0", 10],
+        ["stairs-E-f0", "stairs-E-f1", 10],
+        ["stairs-E-f1", "stairs-E-f2", 10],
+        ["stairs-B-b1", "stairs-B-f0", 10],
+        ["stairs-B-f0", "stairs-B-f1", 10],
+        ["stairs-B-f1", "stairs-B-f2", 10],
+        ["stairs-B-f2", "stairs-B-f3", 10],
+
+
+        ["elevator-E-b1", "elevator-E-f0", 6],
+        ["elevator-E-f0", "elevator-E-f1", 6],
+        ["elevator-E-f1", "elevator-E-f2", 6],
+        ["elevator-B-b1", "elevator-B-f0", 6],
+        ["elevator-B-f0", "elevator-B-f1", 6],
+        ["elevator-B-f1", "elevator-B-f2", 6],
+        ["elevator-B-f2", "elevator-B-f3", 6]
+    ]
+}
